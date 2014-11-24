@@ -1,63 +1,65 @@
-
-
-<% @meetup["results"].each do |result| %>
-<div style="margin-bottom:40px;border-bottom:5px solid gray;float:left;">
-<div class="col-sm-6 col-lg-6  wow bounceIn" data-wow-offset="80" data-wow-duration="2s">
+<% @meetups.each do |meetup| %>
+    <div style="margin-bottom:40px;border-bottom:5px solid gray;float:left;">
+      <div class="col-sm-6 col-lg-6  wow bounceIn" data-wow-offset="80" data-wow-duration="2s">
         <div class="price-plan">
-			<div class="price-plan-top">
-            	<a class="price-plan-link" href="<%= "http://www.meetup.com/kcruby/events/#{result["id"]}"%>">
-				<h2><%= result["name"] %></h2>
-				<div class="price">
-          <% if result["time"].present? && result["duration"].present? %>
-	            <% t = Time.at(result["time"]/1000.0) %>
-				<span class="dollar"><span style="font-size:.8em;"><%= t.strftime("%B") %></span></span><span class="amt"><%= t.strftime("#{t.day.ordinalize}") %></span> <span class="mo"><%= t.strftime("%Y") %></span>
-                <p class="price-breakdown">
-                		<br><span style="font-size:1.5em;"><span style="font-size:1.5em;"><%= t.strftime("%A") %>&nbsp;&nbsp;&nbsp;</span><br><br><span style="font-size:1.5em;"</span><%= t.strftime("%-I") %></span><span style="font-size:1.2em;">:00pm</span>&nbsp;to&nbsp;<span style="font-size:1.5em;"><% dur = Time.at((result["time"]/1000)+(result["duration"]/1000)) %><%= dur.strftime("%-I") %></span><span style="font-size:1.2em;">:00pm</span></span>
-                </p>
-          <% end %>
+          <div class="price-plan-top">
+            <a class="price-plan-link" href="<%= "#{meetup.event_url}" %>">
+              <h2><%= meetup.name %></h2>
+
+              <div class="price">
+                    <span class="dollar"><span style="font-size:.8em;"><%= meetup.month %></span></span><span class="amt"><%= meetup.day %></span>
+                    <span class="mo"><%= meetup.year %></span>
+
+                    <p class="price-breakdown">
+                      <br><span style="font-size:1.5em;"><span style="font-size:1.5em;"><%= meetup.day_of_week %>&nbsp;&nbsp;&nbsp;</span><br><br><span style="font-size:1.5em;"><%= meetup.starts %></span>
+                      <span style="font-size:1.2em;">:00pm</span>&nbsp;to&nbsp;<span style="font-size:1.5em;"><%= meetup.ends %></span><span style="font-size:1.2em;">:00pm</span></span>
+                    </p>
               </div>
             </a>
-          		</div>
-				<div class="info-wrapper">
-				<ul class="list-group">
-					<li style="font-size:1.2em;"><%= strip_tags(result["description"]) %></li>
-				</ul>
-					<a href="<%= "http://www.meetup.com/kcruby/events/#{result["id"]}"%>" class="btn"><span style="font-size:1.4em;">RSVP</span><br>on meetup.com</a>
-				</div>
-			</div>
-		</div>
-<% if result && result["venue"] %>
-		<div><span style="font-style:italic;">Where we're meeting:&nbsp;&nbsp;</span><span style="font-size:1.4em;font-weight:bold;"><%= result["venue"]["name"] %></span></div>
-				<div id="google-maps">
-					<div class="google-maps">
-					</div>
-				</div>
-</div>
+          </div>
+          <div class="info-wrapper">
+            <ul class="list-group">
+              <li style="font-size:1.2em;"><%= strip_tags(meetup.description) %></li>
+            </ul>
+            <a href="<%= "#{meetup.event_url}" %>" class="btn"><span style="font-size:1.4em;">RSVP</span><br>on
+              meetup.com</a>
+          </div>
+        </div>
+      </div>
+      <% if meetup.venue_name %>
+          <div>
+            <span style="font-style:italic;">Where we're meeting:&nbsp;&nbsp;</span><span style="font-size:1.4em;font-weight:bold;"><%= meetup.venue_name %></span>
+          </div>
+          <div id="google-maps">
+            <div class="google-maps">
+            </div>
+          </div>
+          </div>
 
-				<% addr = result["venue"]["address_1"] %>
-				<% city = result["venue"]["city"] %>
-				<% state = result["venue"]["state"] %>
-				<% full_addr = addr + "," + city + "," + state %>
 
-		<script type="text/javascript">
-		    $(".google-maps").gmap3({
-			marker:{
-			address:"<%= full_addr %>",
-			options:{ icon: "/assets/images/marker.png"}},
-			map:{
-			options:{
-			styles: [ {
-			stylers: [ { "saturation":-100 }, { "lightness": 0 }, { "gamma": 0.5 }]},
-			],
-			zoom: 18,
-			scrollwheel:false,
-			draggable: false }
-			}
-			});
-		</script>
-	<% else %>
-	<p>Still looking for a location for&nbsp;<%= result["name"] %></p>
-	<% end %>
+
+          <script type="text/javascript">
+              $(".google-maps").gmap3({
+                  marker: {
+                      address: "<%= meetup.venue_full_addr %>",
+                      options: {icon: "/assets/images/marker.png"}
+                  },
+                  map: {
+                      options: {
+                          styles: [{
+                              stylers: [{"saturation": -100}, {"lightness": 0}, {"gamma": 0.5}]
+                          },
+                          ],
+                          zoom: 18,
+                          scrollwheel: false,
+                          draggable: false
+                      }
+                  }
+              });
+          </script>
+      <% else %>
+          <p>Still looking for a location for&nbsp;<%= meetup.name %></p>
+      <% end %>
 
 
 <% end %>
