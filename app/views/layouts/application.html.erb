@@ -1,143 +1,94 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>KC Ruby</title>
-  <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700' rel='stylesheet' type='text/css'>
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:400,700">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="icon" type="image/ico" href="/assets/images/favicon.ico">
-  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  <head>
+    <title>KC Ruby</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/ico" href="/assets/images/favicon.ico">
 
 
-  <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?sensor=true" %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  
-  <%= csrf_meta_tags %>
+    <%= csrf_meta_tags %>
 
 
-</head>
-<body>
-	<!--HEADER-->
-		<div id="header"> 
-			<div class="col-sm-12 col-lg-12">
-				<div class="row">
-			<!--LOGO-->	
-		<div id="logo">
-			<a class="scroll" href="#home"><img class="ruby wow pulse" data-wow-iteration="infinite" src="/assets/images/ruby.png" alt="logo" /></a>
-		</div>
-			<!--//LOGO-->
-		
-		<!--MENU-->
-			<ul id="menu">
-			    <!-- TODO: Make home pagelinks ajax-->
-				
-			 <% if params[:controller] == 'welcome' %>
+  </head>
+  <body>
+    <!--HEADER-->
+    <div id="header"> 
+      <div class="col-sm-12 col-lg-12">
+        <div class="row">
+          <!--LOGO-->	
+          <div id="logo">
+            <a class="scroll" href="#home"><img class="ruby wow pulse" data-wow-iteration="infinite" src="/assets/images/ruby.png" alt="logo" /></a>
+          </div>
+          <!--//LOGO-->
 
-			    <li><a class="scroll" href="#home">Home</a></li>
-				<li><a class="scroll" href="#price">Upcoming Meetups</a></li>
-				<li><a class="scroll" href="#contact">Contact</a></li>
+          <!--MENU-->
+          <ul id="menu">
+            <!-- TODO: Make home pagelinks ajax-->
 
-			<% else %>
+            <% if params[:controller] == 'welcome' %>
 
-				<li><a class="scroll" href="#"><%= link_to 'Home', root_path, method: :get  %></a></li>
-				<li><a class="scroll" href="#"><%= link_to 'Upcoming Meetings', root_path + '#price', method: :get  %></a></li>
-				<li><a class="scroll" href="#"><%= link_to 'Contact', root_path + '#contact', method: :get  %></a></li>
+              <li><a class="scroll" href="#home">Home</a></li>
+              <li><a class="scroll" href="#contact">Contact</a></li>
 
-			<% end %>
+            <% else %>
 
-				<li><a class="scroll" href="#"><%= link_to 'Blog', root_path + 'blogs', method: :get  %></a></li>
+              <li><a class="scroll" href="#"><%= link_to 'Home', root_path, method: :get  %></a></li>
+              <li><a class="scroll" href="#"><%= link_to 'Contact', root_path + '#contact', method: :get  %></a></li>
 
-			<% if signed_in? %>
+            <% end %>
 
-                 <li><a class="scroll" href="#"><%= link_to "Users", users_path, method: :get %></a></li>
-                 <li><a class="scroll" href="#"><%= link_to "Photos", root_path + 'gallery', method: :get %></a></li>
-                <li><a class="scroll" href="#"><%= link_to "Profile", current_user, method: :get %></a></li>
-                <li><a class="scroll" href="#"><%= link_to "Settings", edit_user_path(current_user), method: :get %></a></li>
-                <li><a class="scroll" href="#">
-                  <%= link_to "Sign out", signout_path, method: "delete" %></a>
-                </li>
-              </ul>
-            </li>
 
-          <% else %>
 
-          	<% if params[:controller] == 'welcome' %>
+            <% if params[:controller] == 'welcome' %>
 
-          		<li><a class="scroll" href="#about">What to Expect</a>&nbsp;&nbsp;&&nbsp;
-				<a class="scroll" href="#team">Who we are</a></li>
-            
-			<% else %>
-				<script>WOW();</script>
-				<li><a class="scroll" href="#"><%= link_to 'What to Expect', root_path + '#about', method: :get  %></a>&nbsp;&nbsp;&&nbsp;
-				<a class="scroll" href="#"><%= link_to 'Who we are', root_path + '#team', method: :get  %></a></li>
+              <li>
+              <a class="scroll" href="#team">Who we are</a></li>
 
-			<% end %>
+            <% else %>
+              <script>WOW();</script>
+              <li>
+              <a class="scroll" href="#"><%= link_to 'Who we are', root_path + '#team', method: :get  %></a></li>
 
-            <li><a class="scroll" href="#"><%= link_to "Sign in", signin_path, method: :get %></a></li>
-            <li><a class="scroll" href="#"><%= link_to 'Sign Up', new_user_path, method: :get  %></a></li>
+            <% end %>
 
-          <% end %>
 
-			</ul>
+          </ul>
 
-			<!--//MENU-->
-		<!--RESPONSIVE TOGGLE-->
-		<div id="nav-toggle">
-			<i class="fa fa-bars"></i>
-		</div>
-	<!--//RESPONSIVE TOGGLE-->
-		</div>
-	</div>
-		</div>
-		<!--//HEADER-->
+          <!--//MENU-->
+          <!--RESPONSIVE TOGGLE-->
+          <div id="nav-toggle">
+            <i class="fa fa-bars"></i>
+          </div>
+          <!--//RESPONSIVE TOGGLE-->
+        </div>
+      </div>
+    </div>
+    <!--//HEADER-->
 
-	<%= yield %> 
-						
-							<!--START FOOTER--> 		
-								<footer>				
-								
-								<div class="center footer">
-								<!-- UP TO TOP -->	
+    <%= yield %> 
 
-									<div id="copyright" class="wow bounceIn" data-wow-offset="80" data-wow-duration="2s"><%= link_to 'Ruby Users Group', url_for('../../'), method: :get %></div>
-									
+    <!--START FOOTER--> 		
+    <footer>				
 
-									<div id="copyright" class="wow">Kansas City</div>
-								</div>
-							</div>
-						</footer>
-					<!--//END--> 
-<!--SCRIPTS--> 
+    <div class="center footer">
+      <!-- UP TO TOP -->	
 
-<script type="text/javascript">
-//<![CDATA[
-	$(document).ready(function() {
-		//$.wallpaper("defaults", {"mute":true});
-		<!--//Mute Wallpaper-->
-	$('.wallpapered').wallpaper().on('wallpaper.loaded', function(){
-	  $('video', this).prop('muted', true);
-	});
-	
-	});
-//]]>
-</script>	
+      <div id="copyright" class="wow bounceIn" data-wow-offset="80" data-wow-duration="2s"><%= link_to 'Ruby Users Group', url_for('../../'), method: :get %></div>
 
-	<script type="text/javascript">
-//<![CDATA[
-	$(document).ready(function() {
-    		$("#clients").owlCarousel({
-				autoPlay: 3000, //Set AutoPlay to 3 seconds
-				items : 4,
-				itemsDesktop : [1199,3],
-				itemsDesktopSmall : [979,3]
-			});
-		});
-	//]]>
-</script>
+
+      <div id="copyright" class="wow">Kansas City</div>
+    </div>
+  </div>
+  </footer>
+  <!--//END--> 
+  <!--SCRIPTS--> 
+
+
 </body>
 </html>
